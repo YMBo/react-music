@@ -2,12 +2,14 @@ import React from 'react'
 import Header from './components/header'
 import Player from './player/player'
 import { MUSIC_LIST } from './config/musiclist'
+import Musiclist from './player/musiclist'
 
 
 class Root extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			musiclist : MUSIC_LIST,
 			currentMusicItem: MUSIC_LIST[0]
 		};
 	}
@@ -27,7 +29,7 @@ class Root extends React.Component {
 		return (
 			<div>
 				<Header />
-				<Player currentMusicItem={this.state.currentMusicItem} />
+				<Musiclist  currentMusicItem={this.state.currentMusicItem} musiclist={this.state.musiclist} />
 			</div>
 		)
 	}
