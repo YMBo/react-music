@@ -1,10 +1,10 @@
 export const MUSIC_LIST = [
 	{
 		id: 1,
-		title: '天使中的魔鬼',
-		artist: '田馥甄',
-		file: 'http://oj4t8z2d5.bkt.clouddn.com/%E9%AD%94%E9%AC%BC%E4%B8%AD%E7%9A%84%E5%A4%A9%E4%BD%BF.mp3',
-		cover: 'http://oj4t8z2d5.bkt.clouddn.com/%E9%AD%94%E9%AC%BC%E4%B8%AD%E7%9A%84%E5%A4%A9%E4%BD%BF.jpg'
+		title: 'FXXK IT',
+		artist: 'bigbang',
+		file: 'http://dl.stream.qqmusic.qq.com/C400003fosyZ0OhEUy.m4a?vkey=ABBA2C3F96ABF9CE30482827C5E89862548D03193C1E338E7F19F4794EE7245DEBAC2E01AA2EA4C4A3184E2582B93CCC43B7A4DC477289E6&guid=9528717828&uin=619697451&fromtag=66',
+		cover: 'http://p4.music.126.net/YFz7JOGYtid5MoecLO6Otw==/3412884134806295.jpg?param=130y130'
 	}, {
 		id: 2,
 		title: '风继续吹',

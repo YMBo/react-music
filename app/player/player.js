@@ -11,16 +11,17 @@ class Player extends React.Component {
 		this.state = {
 			progress: 0,
 			volume: 0,
+			time:0,
 			isPlay:true
 		};
 	}
 	componentDidMount(){
 		$('#player').bind($.jPlayer.event.timeupdate, (e)=>{
 			/*总时间*/
-			console.log('66')
 			duration=e.jPlayer.status.duration;
 			this.setState({
 				volume : e.jPlayer.options.volume * 100,
+				time :e.jPlayer.status.currentTime,
 				progress: e.jPlayer.status.currentPercentAbsolute
 			})
 		});
@@ -49,7 +50,6 @@ class Player extends React.Component {
 						<h2 className="music-title">{this.props.currentMusicItem.title}</h2>
 						<h3 className="music-artist mt10">{this.props.currentMusicItem.artist}</h3>
 						<div className="row mt20">
-							<div className="left-time -col-auto">-2:00</div>
 							<div className="volume-container">
 								<i className="icon-volume rt" style={{top:5,left:-5}}></i>
 								<div className="volume-wrapper">
@@ -59,6 +59,7 @@ class Player extends React.Component {
 						</div>
 						<div style={{height:10,lineHeight:'10px'}}>
 							<Progress progress={this.state.progress} onProgressChange={this.progressChangeHandler.bind(this)} />
+							<div className="left-time -col-auto">{(this.state.time/60).toFixed(0)>10?10:'0'+(this.state.time/60).toFixed(0)} : {((this.state.time).toFixed(0)%60<10) ? '0'+(this.state.time).toFixed(0)%60 : (this.state.time).toFixed(0)%60} s</div>
 						</div>
 			                		<div className="mt35 row">
 			                			<div>
