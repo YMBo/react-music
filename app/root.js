@@ -1,11 +1,11 @@
-import React from 'react'
-import Header from './components/header'
-import Player from './player/player'
-import { MUSIC_LIST } from './config/musiclist'
-import Musiclist from './player/musiclist'
+import React from 'react';
+import Header from './components/header';
+import Player from './player/player';
+import { MUSIC_LIST } from './config/musiclist';
+import Musiclist from './player/musiclist';
+import {  hashHistory  ,Router, Route, IndexRoute } from 'react-router'
 
-
-class Root extends React.Component {
+class App extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -29,9 +29,23 @@ class Root extends React.Component {
 		return (
 			<div>
 				<Header />
-				<Musiclist  currentMusicItem={this.state.currentMusicItem} musiclist={this.state.musiclist} />
+				{ React.cloneElement(this.props.children , this.state) }
 			</div>
 		)
 	}
-};
+}
+
+class Root extends React.Component {
+	render(){
+		return (
+			<Router history={hashHistory}>
+				<Route path='/' component={App}>
+					<IndexRoute component={Player} />
+					<Route path='/list' component={Musiclist}></Route>
+				</Route>
+			</Router>
+		)
+	}
+}
+
 export default Root;
