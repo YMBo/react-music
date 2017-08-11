@@ -2,6 +2,7 @@ import React from 'react'
 import Progress from '../components/progress'
 import  './Player.less'
 import { Link } from 'react-router'
+import Pubsub from 'pubsub-js'
 
 /*总时间*/
 let duration = null;
@@ -22,7 +23,7 @@ class Player extends React.Component {
 			this.setState({
 				volume : e.jPlayer.options.volume * 100,
 				time :e.jPlayer.status.currentTime,
-				progress: e.jPlayer.status.currentPercentAbsolute
+				progress: e.jPlayer.status.currentPercentAbsolute,
 			})
 		});
 	}
@@ -40,6 +41,12 @@ class Player extends React.Component {
 		this.setState({
 			isPlay:!this.state.isPlay
 		})
+	}
+	playPrev(){
+		Pubsub.publish('PLAY_PREV');
+	}
+	playNext(){
+		Pubsub.publish('PLAY_NEXT');
 	}
 	render(){
 		return (
@@ -63,17 +70,17 @@ class Player extends React.Component {
 						</div>
 			                		<div className="mt35 row">
 			                			<div>
-				                			<i className="icon prev"></i>
-				                			<i className={`icon ml20 ${this.state.isPlay?'pause':'play'}`} onClick={this.play.bind(this)}></i>
-				                			<i className="icon next ml20"></i>
+				                			<i className="icon prev" onClick={this.playPrev}></i>
+				                			<i className={`icon ml20 ${Math.ceil(this.state.time)>= Math.ceil(duration) ? 'play' : this.state.isPlay ? 'pause':'play'}`} onClick={this.play.bind(this)}></i>
+				                			<i className="icon next ml20" onClick={this.playNext}></i>
 			                			</div>
 			                			<div className="-col-auto">
 			                				<i className="icon repeat-cycle"></i>
 			                			</div>
 			                		</div>
 					</div>
-					<div className="-col-auto cover">
-						<img src={this.props.currentMusicItem.cover} alt={this.props.currentMusicItem.title}/>
+					<div className='-col-auto cover' >
+						<img className={`${Math.ceil(this.state.time)>= Math.ceil(duration) ? 'pause' : this.state.isPlay ? '':'pause'}`} src={this.props.currentMusicItem.cover} alt={this.props.currentMusicItem.title}/>
 					</div>
 				</div>
 			</div>

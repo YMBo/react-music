@@ -1,3 +1,8 @@
+@keyframes rotate
+{
+from {transform: rotate(0);}
+to {transform: rotate(360deg);}
+}
 .player-page {
 	width: 700px;
 	margin: auto;
@@ -17,8 +22,13 @@
 			width: 180px;
 			height: 180px;
 			border-radius: 50%;
+			animation:rotate 25s linear infinite;
 		}
+
 	}
+	img.pause{
+			animation-play-state:paused;
+		}
 	.volume-container {
 		position: relative;
 		left: 20px;
