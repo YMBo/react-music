@@ -44,9 +44,15 @@ class Player extends React.Component {
 	}
 	playPrev(){
 		Pubsub.publish('PLAY_PREV');
+		this.setState({
+			isPlay:true
+		})
 	}
 	playNext(){
 		Pubsub.publish('PLAY_NEXT');
+		this.setState({
+			isPlay:true
+		})
 	}
 	render(){
 		return (
@@ -70,9 +76,9 @@ class Player extends React.Component {
 						</div>
 			                		<div className="mt35 row">
 			                			<div>
-				                			<i className="icon prev" onClick={this.playPrev}></i>
+				                			<i className="icon prev" onClick={this.playPrev.bind(this)}></i>
 				                			<i className={`icon ml20 ${Math.ceil(this.state.time)>= Math.ceil(duration) ? 'play' : this.state.isPlay ? 'pause':'play'}`} onClick={this.play.bind(this)}></i>
-				                			<i className="icon next ml20" onClick={this.playNext}></i>
+				                			<i className="icon next ml20" onClick={this.playNext.bind(this)}></i>
 			                			</div>
 			                			<div className="-col-auto">
 			                				<i className="icon repeat-cycle"></i>

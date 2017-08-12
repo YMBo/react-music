@@ -46,14 +46,15 @@ class App extends React.Component{
 			this.playNext();
 		})
 		Pubsub.subscribe('DELETE_MUSIC' , (msg , musicItem) =>{
+			if(this.state.currentMusicItem === musicItem){
+				this.playNext('next');
+			}
 			this.setState({
 				musiclist : this.state.musiclist.filter(item=>{
 					return item !== musicItem
 				})
 			});
-			if(this.state.currentMusicItem === musicItem){
-				this.playNext('next');
-			}
+			
 		} )
 		Pubsub.subscribe('PLAY_MUSIC' , (msg , musicItem) =>{
 			this.playMusic(musicItem)

@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "84ed7ac89cbff65dc9b1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "23fa54088312b9cafe71"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -26557,14 +26557,14 @@ var App = function (_React$Component) {
 				_this2.playNext();
 			});
 			_pubsubJs2.default.subscribe('DELETE_MUSIC', function (msg, musicItem) {
+				if (_this2.state.currentMusicItem === musicItem) {
+					_this2.playNext('next');
+				}
 				_this2.setState({
 					musiclist: _this2.state.musiclist.filter(function (item) {
 						return item !== musicItem;
 					})
 				});
-				if (_this2.state.currentMusicItem === musicItem) {
-					_this2.playNext('next');
-				}
 			});
 			_pubsubJs2.default.subscribe('PLAY_MUSIC', function (msg, musicItem) {
 				_this2.playMusic(musicItem);
@@ -26672,7 +26672,7 @@ var Header = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				{ className: 'components-header row' },
-				_react2.default.createElement('img', { src: '/static/images/logo.png', width: '40', alt: '', className: '-col-auto' }),
+				_react2.default.createElement('img', { src: 'static/images/logo.png', width: '40', alt: '', className: '-col-auto' }),
 				_react2.default.createElement(
 					'h1',
 					{ className: 'caption' },
@@ -26912,11 +26912,17 @@ var Player = function (_React$Component) {
 		key: 'playPrev',
 		value: function playPrev() {
 			_pubsubJs2.default.publish('PLAY_PREV');
+			this.setState({
+				isPlay: true
+			});
 		}
 	}, {
 		key: 'playNext',
 		value: function playNext() {
 			_pubsubJs2.default.publish('PLAY_NEXT');
+			this.setState({
+				isPlay: true
+			});
 		}
 	}, {
 		key: 'render',
@@ -26983,9 +26989,9 @@ var Player = function (_React$Component) {
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('i', { className: 'icon prev', onClick: this.playPrev }),
+								_react2.default.createElement('i', { className: 'icon prev', onClick: this.playPrev.bind(this) }),
 								_react2.default.createElement('i', { className: 'icon ml20 ' + (Math.ceil(this.state.time) >= Math.ceil(duration) ? 'play' : this.state.isPlay ? 'pause' : 'play'), onClick: this.play.bind(this) }),
-								_react2.default.createElement('i', { className: 'icon next ml20', onClick: this.playNext })
+								_react2.default.createElement('i', { className: 'icon next ml20', onClick: this.playNext.bind(this) })
 							),
 							_react2.default.createElement(
 								'div',
