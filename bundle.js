@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8e66b452aff172c34914"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "23fa54088312b9cafe71"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -26557,14 +26557,14 @@ var App = function (_React$Component) {
 				_this2.playNext();
 			});
 			_pubsubJs2.default.subscribe('DELETE_MUSIC', function (msg, musicItem) {
+				if (_this2.state.currentMusicItem === musicItem) {
+					_this2.playNext('next');
+				}
 				_this2.setState({
 					musiclist: _this2.state.musiclist.filter(function (item) {
 						return item !== musicItem;
 					})
 				});
-				if (_this2.state.currentMusicItem === musicItem) {
-					_this2.playNext('next');
-				}
 			});
 			_pubsubJs2.default.subscribe('PLAY_MUSIC', function (msg, musicItem) {
 				_this2.playMusic(musicItem);
@@ -26672,7 +26672,7 @@ var Header = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				{ className: 'components-header row' },
-				_react2.default.createElement('img', { src: '/static/images/logo.png', width: '40', alt: '', className: '-col-auto' }),
+				_react2.default.createElement('img', { src: 'static/images/logo.png', width: '40', alt: '', className: '-col-auto' }),
 				_react2.default.createElement(
 					'h1',
 					{ className: 'caption' },
@@ -26912,11 +26912,17 @@ var Player = function (_React$Component) {
 		key: 'playPrev',
 		value: function playPrev() {
 			_pubsubJs2.default.publish('PLAY_PREV');
+			this.setState({
+				isPlay: true
+			});
 		}
 	}, {
 		key: 'playNext',
 		value: function playNext() {
 			_pubsubJs2.default.publish('PLAY_NEXT');
+			this.setState({
+				isPlay: true
+			});
 		}
 	}, {
 		key: 'render',
@@ -26983,9 +26989,9 @@ var Player = function (_React$Component) {
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('i', { className: 'icon prev', onClick: this.playPrev }),
+								_react2.default.createElement('i', { className: 'icon prev', onClick: this.playPrev.bind(this) }),
 								_react2.default.createElement('i', { className: 'icon ml20 ' + (Math.ceil(this.state.time) >= Math.ceil(duration) ? 'play' : this.state.isPlay ? 'pause' : 'play'), onClick: this.play.bind(this) }),
-								_react2.default.createElement('i', { className: 'icon next ml20', onClick: this.playNext })
+								_react2.default.createElement('i', { className: 'icon next ml20', onClick: this.playNext.bind(this) })
 							),
 							_react2.default.createElement(
 								'div',
@@ -29455,16 +29461,15 @@ Object.defineProperty(exports, "__esModule", {
 var MUSIC_LIST = exports.MUSIC_LIST = [{
 	id: 1,
 	title: 'FXXK IT',
-	artist: 'BIGBANG',
+	artist: 'bigbang',
 	file: 'http://www.170mv.com/kw/other.web.ri01.sycdn.kuwo.cn/resource/n1/96/84/1523189814.mp3',
 	cover: 'http://p4.music.126.net/YFz7JOGYtid5MoecLO6Otw==/3412884134806295.jpg?param=130y130'
 }, {
 	id: 2,
-	title: '我要你',
-	artist: '任素汐',
-	file: 'http://oj4t8z2d5.bkt.clouddn.com/%E6%88%91%E8%A6%81%E4%BD%A0.mp3',
-	cover: 'http://oj4t8z2d5.bkt.clouddn.com/%E6%88%91%E8%A6%81%E4%BD%A0.jpg'
-
+	title: '风继续吹',
+	artist: '张国荣',
+	file: 'http://oj4t8z2d5.bkt.clouddn.com/%E9%A3%8E%E7%BB%A7%E7%BB%AD%E5%90%B9.mp3',
+	cover: 'http://oj4t8z2d5.bkt.clouddn.com/%E9%A3%8E%E7%BB%A7%E7%BB%AD%E5%90%B9.jpg'
 }, {
 	id: 3,
 	title: '恋恋风尘',
@@ -29473,10 +29478,10 @@ var MUSIC_LIST = exports.MUSIC_LIST = [{
 	cover: 'http://oj4t8z2d5.bkt.clouddn.com/%E6%81%8B%E6%81%8B%E9%A3%8E%E5%B0%98.jpg'
 }, {
 	id: 4,
-	title: '재미없다',
-	artist: 'BIGBANG',
-	file: 'http://so1.111ttt.com:8282/2014/1/09m/26/2261158580.m4a?tflag=1502447906&pin=54e8572ee2a99f5fde4fa7c1fe307405&ip=221.221.252.164#.mp3',
-	cover: 'http://p4.music.126.net/YFz7JOGYtid5MoecLO6Otw==/3412884134806295.jpg?param=130y130'
+	title: '我要你',
+	artist: '任素汐',
+	file: 'http://oj4t8z2d5.bkt.clouddn.com/%E6%88%91%E8%A6%81%E4%BD%A0.mp3',
+	cover: 'http://oj4t8z2d5.bkt.clouddn.com/%E6%88%91%E8%A6%81%E4%BD%A0.jpg'
 }, {
 	id: 5,
 	title: '成都',
