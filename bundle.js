@@ -59,7 +59,7 @@
 /******/
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fb373e50c79e6829e761"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f669bb8c0c2edf3fa3bb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -26515,7 +26515,8 @@ var App = function (_React$Component) {
 
 		_this.state = {
 			musiclist: _musiclist.MUSIC_LIST,
-			currentMusicItem: _musiclist.MUSIC_LIST[0]
+			currentMusicItem: _musiclist.MUSIC_LIST[0],
+			isPlay: null
 		};
 		return _this;
 	}
@@ -26576,6 +26577,11 @@ var App = function (_React$Component) {
 			_pubsubJs2.default.subscribe('PLAY_MUSIC', function (msg, musicItem) {
 				_this2.playMusic(musicItem);
 			});
+			_pubsubJs2.default.subscribe('IS_PLAY', function (msg, isPlay) {
+				_this2.setState({
+					isPlay: true
+				});
+			});
 			_pubsubJs2.default.subscribe('PLAY_PREV', function (msg) {
 				_this2.playNext('prev');
 			});
@@ -26590,6 +26596,7 @@ var App = function (_React$Component) {
 			_pubsubJs2.default.unsubscribe('PLAY_MUSIC');
 			_pubsubJs2.default.unsubscribe('PLAY_PREV');
 			_pubsubJs2.default.unsubscribe('PLAY_NEXT');
+			_pubsubJs2.default.unsubscribe('IS_PLAY');
 			$('#player').unbind($.jPlayer.event.ended);
 		}
 	}, {
@@ -26885,6 +26892,10 @@ var Player = function (_React$Component) {
 	_createClass(Player, [{
 		key: 'componentWillMount',
 		value: function componentWillMount() {
+			if (this.props.isPlay) {
+				console.log(this.props.isPlay);
+				isPlayNow = this.props.isPlay;
+			}
 			this.setState({
 				time: current,
 				isPlay: isPlayNow,
@@ -26951,7 +26962,6 @@ var Player = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			console.log();
 			return _react2.default.createElement(
 				'div',
 				{ className: 'player-page' },
@@ -29625,6 +29635,7 @@ var MusicListItem = function (_React$Component) {
 		key: 'playMusic',
 		value: function playMusic(musicItem) {
 			_pubsubJs2.default.publish('PLAY_MUSIC', musicItem);
+			_pubsubJs2.default.publish('IS_PLAY', true);
 		}
 	}, {
 		key: 'deleteMusic',
