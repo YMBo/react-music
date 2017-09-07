@@ -5,7 +5,12 @@ import { Link } from 'react-router'
 import Pubsub from 'pubsub-js'
 
 /*总时间*/
-let duration = null;
+let duration = 0;
+/*当前进度*/
+let current=0;
+/*播放状态*/
+let isPlayNow=true;
+let currentWidth=0;
 class Player extends React.Component {
 	constructor(props) {
 		super(props);
@@ -16,10 +21,19 @@ class Player extends React.Component {
 			isPlay:true
 		};
 	}
+	componentWillMount(){
+		this.setState({
+			time:current,
+			isPlay:isPlayNow,
+			progress:currentWidth
+		});
+	}
 	componentDidMount(){
 		$('#player').bind($.jPlayer.event.timeupdate, (e)=>{
 			/*总时间*/
 			duration=e.jPlayer.status.duration;
+			current=e.jPlayer.status.currentTime;
+			currentWidth=e.jPlayer.status.currentPercentAbsolute;
 			this.setState({
 				volume : e.jPlayer.options.volume * 100,
 				time :e.jPlayer.status.currentTime,
@@ -29,6 +43,7 @@ class Player extends React.Component {
 	}
 	componentWillUnmount(){
 		$('#player').unbind($.jPlayer.event.timeupdate);
+		isPlayNow=this.state.isPlay;
 	}
 	progressChangeHandler(progress){
 		$('#player').jPlayer(this.state.isPlay?'play':'pause',duration * progress);
@@ -55,6 +70,7 @@ class Player extends React.Component {
 		})
 	}
 	render(){
+		console.log()
 		return (
 			<div className='player-page'>
 				<h1 className='caption'><Link to='/list'>我的私人音乐坊</Link> </h1>
