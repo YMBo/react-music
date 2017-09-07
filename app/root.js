@@ -11,7 +11,8 @@ class App extends React.Component{
 		super(props);
 		this.state = {
 			musiclist : MUSIC_LIST,
-			currentMusicItem: MUSIC_LIST[0]
+			currentMusicItem: MUSIC_LIST[0],
+			isPlay:null
 		};
 	}
 	playMusic(musicItem){
@@ -59,6 +60,11 @@ class App extends React.Component{
 		Pubsub.subscribe('PLAY_MUSIC' , (msg , musicItem) =>{
 			this.playMusic(musicItem)
 		} )
+		Pubsub.subscribe('IS_PLAY' , (msg , isPlay) =>{
+			this.setState({
+				isPlay:true
+			})
+		} )
 		Pubsub.subscribe('PLAY_PREV' , (msg ) =>{
 			this.playNext('prev')
 		} )
@@ -71,6 +77,7 @@ class App extends React.Component{
 		Pubsub.unsubscribe('PLAY_MUSIC');
 		Pubsub.unsubscribe('PLAY_PREV');
 		Pubsub.unsubscribe('PLAY_NEXT');
+		Pubsub.unsubscribe('IS_PLAY');
 		$('#player').unbind($.jPlayer.event.ended)
 	}
 	render(){

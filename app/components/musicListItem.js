@@ -5,6 +5,7 @@ import Pubsub from 'pubsub-js'
 class MusicListItem extends React.Component{
 	playMusic(musicItem){
 		Pubsub.publish('PLAY_MUSIC' , musicItem);
+		Pubsub.publish('IS_PLAY' , true);
 	}
 	deleteMusic(musicItem , event){
 		event.stopPropagation();

@@ -22,6 +22,10 @@ class Player extends React.Component {
 		};
 	}
 	componentWillMount(){
+		if(this.props.isPlay){
+			console.log(this.props.isPlay)
+			isPlayNow=this.props.isPlay
+		}
 		this.setState({
 			time:current,
 			isPlay:isPlayNow,
@@ -70,7 +74,6 @@ class Player extends React.Component {
 		})
 	}
 	render(){
-		console.log()
 		return (
 			<div className='player-page'>
 				<h1 className='caption'><Link to='/list'>我的私人音乐坊</Link> </h1>
