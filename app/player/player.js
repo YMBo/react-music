@@ -1,5 +1,6 @@
 import React from 'react'
 import Progress from '../components/progress'
+import Cover from '../components/cover.js';
 import  './Player.less'
 import { Link } from 'react-router'
 import Pubsub from 'pubsub-js'
@@ -75,37 +76,40 @@ class Player extends React.Component {
 	}
 	render(){
 		return (
-			<div className='player-page'>
-				<h1 className='caption'><Link to='/list'>我的私人音乐坊</Link> </h1>
-				<div className="mt20 row">
-					<div className="controll-wrapper">
-						<h2 className="music-title">{this.props.currentMusicItem.title}</h2>
-						<h3 className="music-artist mt10">{this.props.currentMusicItem.artist}</h3>
-						<div className="row mt20">
-							<div className="volume-container">
-								<i className="icon-volume rt" style={{top:5,left:-5}}></i>
-								<div className="volume-wrapper">
-									<Progress progress={this.state.volume} barColor="red" onProgressChange={this.changeVolumeHanler} />
+			<div>
+				<Cover bg={this.props.currentMusicItem.cover}/>
+				<div className='player-page'>
+					<h1 className='caption'><Link to='/list'>我的私人音乐坊</Link> </h1>
+					<div className="mt20 row">
+						<div className="controll-wrapper">
+							<h2 className="music-title">{this.props.currentMusicItem.title}</h2>
+							<h3 className="music-artist mt10">{this.props.currentMusicItem.artist}</h3>
+							<div className="row mt20">
+								<div className="volume-container">
+									<i className="icon-volume rt" style={{top:5,left:-5}}></i>
+									<div className="volume-wrapper">
+										<Progress progress={this.state.volume} barColor="red" onProgressChange={this.changeVolumeHanler} />
+									</div>
 								</div>
 							</div>
+							<div style={{height:10,lineHeight:'10px'}}>
+								<Progress progress={this.state.progress} onProgressChange={this.progressChangeHandler.bind(this)} />
+								<div className="left-time -col-auto">{(this.state.time/60).toFixed(0)>10?10:'0'+(this.state.time/60).toFixed(0)} : {((this.state.time).toFixed(0)%60<10) ? '0'+(this.state.time).toFixed(0)%60 : (this.state.time).toFixed(0)%60} s</div>
+							</div>
+				                		<div className="mt35 row">
+				                			<div>
+					                			<i className="icon prev" onClick={this.playPrev.bind(this)}></i>
+					                			<i className={`icon ml20 ${Math.ceil(this.state.time)>= Math.ceil(duration) ? 'play' : this.state.isPlay ? 'pause':'play'}`} onClick={this.play.bind(this)}></i>
+					                			<i className="icon next ml20" onClick={this.playNext.bind(this)}></i>
+				                			</div>
+				                			<div className="-col-auto">
+				                				<i className="icon repeat-cycle"></i>
+				                			</div>
+				                		</div>
 						</div>
-						<div style={{height:10,lineHeight:'10px'}}>
-							<Progress progress={this.state.progress} onProgressChange={this.progressChangeHandler.bind(this)} />
-							<div className="left-time -col-auto">{(this.state.time/60).toFixed(0)>10?10:'0'+(this.state.time/60).toFixed(0)} : {((this.state.time).toFixed(0)%60<10) ? '0'+(this.state.time).toFixed(0)%60 : (this.state.time).toFixed(0)%60} s</div>
+						<div className='-col-auto cover' >
+							<img className={`${Math.ceil(this.state.time)>= Math.ceil(duration) ? 'pause' : this.state.isPlay ? '':'pause'}`} src={this.props.currentMusicItem.cover} alt={this.props.currentMusicItem.title}/>
 						</div>
-			                		<div className="mt35 row">
-			                			<div>
-				                			<i className="icon prev" onClick={this.playPrev.bind(this)}></i>
-				                			<i className={`icon ml20 ${Math.ceil(this.state.time)>= Math.ceil(duration) ? 'play' : this.state.isPlay ? 'pause':'play'}`} onClick={this.play.bind(this)}></i>
-				                			<i className="icon next ml20" onClick={this.playNext.bind(this)}></i>
-			                			</div>
-			                			<div className="-col-auto">
-			                				<i className="icon repeat-cycle"></i>
-			                			</div>
-			                		</div>
-					</div>
-					<div className='-col-auto cover' >
-						<img className={`${Math.ceil(this.state.time)>= Math.ceil(duration) ? 'pause' : this.state.isPlay ? '':'pause'}`} src={this.props.currentMusicItem.cover} alt={this.props.currentMusicItem.title}/>
 					</div>
 				</div>
 			</div>
