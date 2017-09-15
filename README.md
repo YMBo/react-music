@@ -8,4 +8,4 @@ react + react-router + pubsub
 
 [在线预览](https://ymbo.github.io/react-music/#/)   
 
-有帮助的给个star呗   
+![music](https://github.com/YMBo/react-music/blob/master/static/images/1.gif)   
