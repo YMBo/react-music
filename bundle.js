@@ -15,6 +15,7 @@
 /******/ 		script.type = "text/javascript";
 /******/ 		script.charset = "utf-8";
 /******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
+/******/ 		;
 /******/ 		head.appendChild(script);
 /******/ 	}
 /******/ 	
@@ -60,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ef3099bebe7206977739"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "91adeded382751fa3bc5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29290,10 +29291,10 @@ var MUSIC_LIST = exports.MUSIC_LIST = [{
 	cover: 'http://p4.music.126.net/YFz7JOGYtid5MoecLO6Otw==/3412884134806295.jpg?param=130y130'
 }, {
 	id: 2,
-	title: '风继续吹',
-	artist: '张国荣',
-	file: 'http://oj4t8z2d5.bkt.clouddn.com/%E9%A3%8E%E7%BB%A7%E7%BB%AD%E5%90%B9.mp3',
-	cover: 'http://oj4t8z2d5.bkt.clouddn.com/%E9%A3%8E%E7%BB%A7%E7%BB%AD%E5%90%B9.jpg'
+	title: 'Poker Face',
+	artist: 'Lady Gaga',
+	file: 'http://other.web.ri01.sycdn.kuwo.cn/resource/n2/26/4/2444236557.mp3',
+	cover: 'http://imge.kugou.com/stdmusic/20150717/20150717220845667722.jpg'
 }, {
 	id: 3,
 	title: '恋恋风尘',
