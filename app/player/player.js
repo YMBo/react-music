@@ -54,7 +54,10 @@ class Player extends React.Component {
 		$('#player').jPlayer(this.state.isPlay?'play':'pause',duration * progress);
 	}
 	changeVolumeHanler(progress){
-		$('#player').jPlayer('volume',progress)
+		$('#player').jPlayer('volume',progress);
+		this.setState({
+			volume:progress*100
+		})
 	}
 	play(){
 		this.state.isPlay ? $('#player').jPlayer('pause') : $('#player').jPlayer('play');
@@ -88,7 +91,7 @@ class Player extends React.Component {
 								<div className="volume-container">
 									<i className="icon-volume rt" style={{top:5,left:-5}}></i>
 									<div className="volume-wrapper">
-										<Progress progress={this.state.volume} barColor="red" onProgressChange={this.changeVolumeHanler} />
+										<Progress progress={this.state.volume} barColor="red" onProgressChange={this.changeVolumeHanler.bind(this)} />
 									</div>
 								</div>
 							</div>
