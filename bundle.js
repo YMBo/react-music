@@ -2,8 +2,8 @@
 /******/ 	function hotDisposeChunk(chunkId) {
 /******/ 		delete installedChunks[chunkId];
 /******/ 	}
-/******/ 	var parentHotUpdateCallback = window["webpackHotUpdate"];
-/******/ 	window["webpackHotUpdate"] = 
+/******/ 	var parentHotUpdateCallback = this["webpackHotUpdate"];
+/******/ 	this["webpackHotUpdate"] = 
 /******/ 	function webpackHotUpdateCallback(chunkId, moreModules) { // eslint-disable-line no-unused-vars
 /******/ 		hotAddUpdateChunk(chunkId, moreModules);
 /******/ 		if(parentHotUpdateCallback) parentHotUpdateCallback(chunkId, moreModules);
@@ -15,7 +15,6 @@
 /******/ 		script.type = "text/javascript";
 /******/ 		script.charset = "utf-8";
 /******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
-/******/ 		;
 /******/ 		head.appendChild(script);
 /******/ 	}
 /******/ 	
@@ -61,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2a9c941d96981a9273be"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "409d9417cd61ae442c03"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -8489,7 +8488,7 @@ module.exports = getEventCharCode;
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(34)(false);
+exports = module.exports = __webpack_require__(34)(undefined);
 // imports
 
 
@@ -8503,7 +8502,7 @@ exports.push([module.i, ".components-header {\n  box-sizing: border-box;\n  padd
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(34)(false);
+exports = module.exports = __webpack_require__(34)(undefined);
 // imports
 
 
@@ -8517,7 +8516,7 @@ exports.push([module.i, ".components-progress {\n  width: 100%;\n  height: 3px;\
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(34)(false);
+exports = module.exports = __webpack_require__(34)(undefined);
 // imports
 
 
@@ -8531,7 +8530,7 @@ exports.push([module.i, ".coverBox {\n  position: fixed;\n  top: 0;\n  left: 0;\
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(34)(false);
+exports = module.exports = __webpack_require__(34)(undefined);
 // imports
 
 
@@ -9247,216 +9246,199 @@ var go = exports.go = function go(n) {
 /* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {/*
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
 Copyright (c) 2010,2011,2012,2013,2014 Morgan Roderick http://roderick.dk
 License: MIT - http://mrgnrdrck.mit-license.org
 
 https://github.com/mroderick/PubSubJS
 */
 (function (root, factory){
-    'use strict';
+	'use strict';
 
-    var PubSub = {};
-    root.PubSub = PubSub;
+	var PubSub = {};
+	root.PubSub = PubSub;
+	factory(PubSub);
 
-    var define = root.define;
+	// AMD support
+	if (true){
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = function() { return PubSub; }.call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
-    factory(PubSub);
-
-    // AMD support
-    if (typeof define === 'function' && define.amd){
-        define(function() { return PubSub; });
-
-        // CommonJS and Node.js module support
-    } else if (true){
-        if (module !== undefined && module.exports) {
-            exports = module.exports = PubSub; // Node.js specific `module.exports`
-        }
-        exports.PubSub = PubSub; // CommonJS module 1.1.1 spec
-        module.exports = exports = PubSub; // CommonJS
-    }
+	// CommonJS and Node.js module support
+	} else if (typeof exports === 'object'){
+		if (module !== undefined && module.exports) {
+			exports = module.exports = PubSub; // Node.js specific `module.exports`
+		}
+		exports.PubSub = PubSub; // CommonJS module 1.1.1 spec
+		module.exports = exports = PubSub; // CommonJS
+	}
 
 }(( typeof window === 'object' && window ) || this, function (PubSub){
-    'use strict';
+	'use strict';
 
-    var messages = {},
-        lastUid = -1;
+	var messages = {},
+		lastUid = -1;
 
-    function hasKeys(obj){
-        var key;
+	function hasKeys(obj){
+		var key;
 
-        for (key in obj){
-            if ( obj.hasOwnProperty(key) ){
-                return true;
-            }
-        }
-        return false;
-    }
+		for (key in obj){
+			if ( obj.hasOwnProperty(key) ){
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
+	/**
 	 *	Returns a function that throws the passed exception, for use as argument for setTimeout
 	 *	@param { Object } ex An Error object
 	 */
-    function throwException( ex ){
-        return function reThrowException(){
-            throw ex;
-        };
-    }
+	function throwException( ex ){
+		return function reThrowException(){
+			throw ex;
+		};
+	}
 
-    function callSubscriberWithDelayedExceptions( subscriber, message, data ){
-        try {
-            subscriber( message, data );
-        } catch( ex ){
-            setTimeout( throwException( ex ), 0);
-        }
-    }
+	function callSubscriberWithDelayedExceptions( subscriber, message, data ){
+		try {
+			subscriber( message, data );
+		} catch( ex ){
+			setTimeout( throwException( ex ), 0);
+		}
+	}
 
-    function callSubscriberWithImmediateExceptions( subscriber, message, data ){
-        subscriber( message, data );
-    }
+	function callSubscriberWithImmediateExceptions( subscriber, message, data ){
+		subscriber( message, data );
+	}
 
-    function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
-        var subscribers = messages[matchedMessage],
-            callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
-            s;
+	function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
+		var subscribers = messages[matchedMessage],
+			callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
+			s;
 
-        if ( !messages.hasOwnProperty( matchedMessage ) ) {
-            return;
-        }
+		if ( !messages.hasOwnProperty( matchedMessage ) ) {
+			return;
+		}
 
-        for (s in subscribers){
-            if ( subscribers.hasOwnProperty(s)){
-                callSubscriber( subscribers[s], originalMessage, data );
-            }
-        }
-    }
+		for (s in subscribers){
+			if ( subscribers.hasOwnProperty(s)){
+				callSubscriber( subscribers[s], originalMessage, data );
+			}
+		}
+	}
 
-    function createDeliveryFunction( message, data, immediateExceptions ){
-        return function deliverNamespaced(){
-            var topic = String( message ),
-                position = topic.lastIndexOf( '.' );
+	function createDeliveryFunction( message, data, immediateExceptions ){
+		return function deliverNamespaced(){
+			var topic = String( message ),
+				position = topic.lastIndexOf( '.' );
 
-            // deliver the message as it is now
-            deliverMessage(message, message, data, immediateExceptions);
+			// deliver the message as it is now
+			deliverMessage(message, message, data, immediateExceptions);
 
-            // trim the hierarchy and deliver message to each level
-            while( position !== -1 ){
-                topic = topic.substr( 0, position );
-                position = topic.lastIndexOf('.');
-                deliverMessage( message, topic, data, immediateExceptions );
-            }
-        };
-    }
+			// trim the hierarchy and deliver message to each level
+			while( position !== -1 ){
+				topic = topic.substr( 0, position );
+				position = topic.lastIndexOf('.');
+				deliverMessage( message, topic, data, immediateExceptions );
+			}
+		};
+	}
 
-    function messageHasSubscribers( message ){
-        var topic = String( message ),
-            found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic])),
-            position = topic.lastIndexOf( '.' );
+	function messageHasSubscribers( message ){
+		var topic = String( message ),
+			found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic])),
+			position = topic.lastIndexOf( '.' );
 
-        while ( !found && position !== -1 ){
-            topic = topic.substr( 0, position );
-            position = topic.lastIndexOf( '.' );
-            found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
-        }
+		while ( !found && position !== -1 ){
+			topic = topic.substr( 0, position );
+			position = topic.lastIndexOf( '.' );
+			found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
+		}
 
-        return found;
-    }
+		return found;
+	}
 
-    function publish( message, data, sync, immediateExceptions ){
-        var deliver = createDeliveryFunction( message, data, immediateExceptions ),
-            hasSubscribers = messageHasSubscribers( message );
+	function publish( message, data, sync, immediateExceptions ){
+		var deliver = createDeliveryFunction( message, data, immediateExceptions ),
+			hasSubscribers = messageHasSubscribers( message );
 
-        if ( !hasSubscribers ){
-            return false;
-        }
+		if ( !hasSubscribers ){
+			return false;
+		}
 
-        if ( sync === true ){
-            deliver();
-        } else {
-            setTimeout( deliver, 0 );
-        }
-        return true;
-    }
+		if ( sync === true ){
+			deliver();
+		} else {
+			setTimeout( deliver, 0 );
+		}
+		return true;
+	}
 
-    /**
+	/**
 	 *	PubSub.publish( message[, data] ) -> Boolean
 	 *	- message (String): The message to publish
 	 *	- data: The data to pass to subscribers
 	 *	Publishes the the message, passing the data to it's subscribers
 	**/
-    PubSub.publish = function( message, data ){
-        return publish( message, data, false, PubSub.immediateExceptions );
-    };
+	PubSub.publish = function( message, data ){
+		return publish( message, data, false, PubSub.immediateExceptions );
+	};
 
-    /**
+	/**
 	 *	PubSub.publishSync( message[, data] ) -> Boolean
 	 *	- message (String): The message to publish
 	 *	- data: The data to pass to subscribers
 	 *	Publishes the the message synchronously, passing the data to it's subscribers
 	**/
-    PubSub.publishSync = function( message, data ){
-        return publish( message, data, true, PubSub.immediateExceptions );
-    };
+	PubSub.publishSync = function( message, data ){
+		return publish( message, data, true, PubSub.immediateExceptions );
+	};
 
-    /**
+	/**
 	 *	PubSub.subscribe( message, func ) -> String
 	 *	- message (String): The message to subscribe to
 	 *	- func (Function): The function to call when a new message is published
 	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if
 	 *	you need to unsubscribe
 	**/
-    PubSub.subscribe = function( message, func ){
-        if ( typeof func !== 'function'){
-            return false;
-        }
+	PubSub.subscribe = function( message, func ){
+		if ( typeof func !== 'function'){
+			return false;
+		}
 
-        // message is not registered yet
-        if ( !messages.hasOwnProperty( message ) ){
-            messages[message] = {};
-        }
+		// message is not registered yet
+		if ( !messages.hasOwnProperty( message ) ){
+			messages[message] = {};
+		}
 
-        // forcing token as String, to allow for future expansions without breaking usage
-        // and allow for easy use as key names for the 'messages' object
-        var token = 'uid_' + String(++lastUid);
-        messages[message][token] = func;
+		// forcing token as String, to allow for future expansions without breaking usage
+		// and allow for easy use as key names for the 'messages' object
+		var token = 'uid_' + String(++lastUid);
+		messages[message][token] = func;
 
-        // return token for unsubscribing
-        return token;
-    };
+		// return token for unsubscribing
+		return token;
+	};
 
-    /**
-	 *	PubSub.subscribeOnce( message, func ) -> PubSub
-	 *	- message (String): The message to subscribe to
-	 *	- func (Function): The function to call when a new message is published
-	 *	Subscribes the passed function to the passed message once
-	**/
-    PubSub.subscribeOnce = function( message, func ){
-        var token = PubSub.subscribe( message, function(){
-            // before func apply, unsubscribe message
-            PubSub.unsubscribe( token );
-            func.apply( this, arguments );
-        });
-        return PubSub;
-    };
-
-    /* Public: Clears all subscriptions
+	/* Public: Clears all subscriptions
 	 */
-    PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
-        messages = {};
-    };
+	PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
+		messages = {};
+	};
 
-    /*Public: Clear subscriptions by the topic
+	/*Public: Clear subscriptions by the topic
 	*/
-    PubSub.clearSubscriptions = function clearSubscriptions(topic){
-        var m;
-        for (m in messages){
-            if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
-                delete messages[m];
-            }
-        }
-    };
+	PubSub.clearSubscriptions = function clearSubscriptions(topic){
+		var m;
+		for (m in messages){
+			if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
+				delete messages[m];
+			}
+		}
+	};
 
-    /* Public: removes subscriptions.
+	/* Public: removes subscriptions.
 	 * When passed a token, removes a specific subscription.
 	 * When passed a function, removes all subscriptions for that function
 	 * When passed a topic, removes all subscriptions for that topic (hierarchy)
@@ -9475,62 +9457,61 @@ https://github.com/mroderick/PubSubJS
 	 *		// Example 3 - unsubscribing a topic
 	 *		PubSub.unsubscribe('mytopic');
 	 */
-    PubSub.unsubscribe = function(value){
-        var descendantTopicExists = function(topic) {
-                var m;
-                for ( m in messages ){
-                    if ( messages.hasOwnProperty(m) && m.indexOf(topic) === 0 ){
-                        // a descendant of the topic exists:
-                        return true;
-                    }
-                }
+	PubSub.unsubscribe = function(value){
+		var descendantTopicExists = function(topic) {
+				var m;
+				for ( m in messages ){
+					if ( messages.hasOwnProperty(m) && m.indexOf(topic) === 0 ){
+						// a descendant of the topic exists:
+						return true;
+					}
+				}
 
-                return false;
-            },
-            isTopic    = typeof value === 'string' && ( messages.hasOwnProperty(value) || descendantTopicExists(value) ),
-            isToken    = !isTopic && typeof value === 'string',
-            isFunction = typeof value === 'function',
-            result = false,
-            m, message, t;
+				return false;
+			},
+			isTopic    = typeof value === 'string' && ( messages.hasOwnProperty(value) || descendantTopicExists(value) ),
+			isToken    = !isTopic && typeof value === 'string',
+			isFunction = typeof value === 'function',
+			result = false,
+			m, message, t;
 
-        if (isTopic){
-            PubSub.clearSubscriptions(value);
-            return;
-        }
+		if (isTopic){
+			PubSub.clearSubscriptions(value);
+			return;
+		}
 
-        for ( m in messages ){
-            if ( messages.hasOwnProperty( m ) ){
-                message = messages[m];
+		for ( m in messages ){
+			if ( messages.hasOwnProperty( m ) ){
+				message = messages[m];
 
-                if ( isToken && message[value] ){
-                    delete message[value];
-                    result = value;
-                    // tokens are unique, so we can just stop here
-                    break;
-                }
+				if ( isToken && message[value] ){
+					delete message[value];
+					result = value;
+					// tokens are unique, so we can just stop here
+					break;
+				}
 
-                if (isFunction) {
-                    for ( t in message ){
-                        if (message.hasOwnProperty(t) && message[t] === value){
-                            delete message[t];
-                            result = true;
-                        }
-                    }
-                }
-            }
-        }
+				if (isFunction) {
+					for ( t in message ){
+						if (message.hasOwnProperty(t) && message[t] === value){
+							delete message[t];
+							result = true;
+						}
+					}
+				}
+			}
+		}
 
-        return result;
-    };
+		return result;
+	};
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(261)(module)))
 
 /***/ }),
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(34)(false);
+exports = module.exports = __webpack_require__(34)(undefined);
 // imports
 
 
@@ -26202,9 +26183,9 @@ var _player = __webpack_require__(229);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _musiclist = __webpack_require__(262);
+var _musiclist = __webpack_require__(261);
 
-var _musiclist2 = __webpack_require__(263);
+var _musiclist2 = __webpack_require__(262);
 
 var _musiclist3 = _interopRequireDefault(_musiclist2);
 
@@ -29296,34 +29277,6 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 
 /***/ }),
 /* 261 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29371,7 +29324,7 @@ var MUSIC_LIST = exports.MUSIC_LIST = [{
 }];
 
 /***/ }),
-/* 263 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29387,7 +29340,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _musicListItem = __webpack_require__(264);
+var _musicListItem = __webpack_require__(263);
 
 var _musicListItem2 = _interopRequireDefault(_musicListItem);
 
@@ -29431,7 +29384,7 @@ var Musiclist = function (_React$Component) {
 exports.default = Musiclist;
 
 /***/ }),
-/* 264 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29447,7 +29400,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-__webpack_require__(265);
+__webpack_require__(264);
 
 var _pubsubJs = __webpack_require__(77);
 
@@ -29511,7 +29464,7 @@ var MusicListItem = function (_React$Component) {
 exports.default = MusicListItem;
 
 /***/ }),
-/* 265 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
