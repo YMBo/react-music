@@ -15,7 +15,6 @@
 /******/ 		script.type = "text/javascript";
 /******/ 		script.charset = "utf-8";
 /******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
-/******/ 		;
 /******/ 		head.appendChild(script);
 /******/ 	}
 /******/ 	
@@ -61,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "91adeded382751fa3bc5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "409d9417cd61ae442c03"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -26637,6 +26636,9 @@ var Player = function (_React$Component) {
 		key: 'changeVolumeHanler',
 		value: function changeVolumeHanler(progress) {
 			$('#player').jPlayer('volume', progress);
+			this.setState({
+				volume: progress * 100
+			});
 		}
 	}, {
 		key: 'play',
@@ -26708,7 +26710,7 @@ var Player = function (_React$Component) {
 									_react2.default.createElement(
 										'div',
 										{ className: 'volume-wrapper' },
-										_react2.default.createElement(_progress2.default, { progress: this.state.volume, barColor: 'red', onProgressChange: this.changeVolumeHanler })
+										_react2.default.createElement(_progress2.default, { progress: this.state.volume, barColor: 'red', onProgressChange: this.changeVolumeHanler.bind(this) })
 									)
 								)
 							),
