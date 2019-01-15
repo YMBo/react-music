@@ -8,5 +8,5 @@ react + react-router + pubsub
 
 从这个链接点进去，它会自动播放，如果没有播放，那么打开控制台刷新一下页面就播放了，原因好像是说Chrome禁止进入页面自动播放行为   
 [在线预览](https://ymbo.github.io/react-music/#/)   
-
+test
 ![music](https://github.com/YMBo/react-music/blob/master/static/images/1.gif)   
