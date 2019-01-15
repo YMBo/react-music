@@ -1,6 +1,6 @@
 # react-music   
 ***
-t  
+text  
 react + react-router + pubsub    
 
 这是一个用`react`写的一个音乐播放器，由于有些状态需要共享，这里用的是pubsub事件订阅，   
